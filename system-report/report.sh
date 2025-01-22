@@ -1,16 +1,18 @@
+mkdir report
+
 # PART 1
-df -h | grep sda[0-9] >> report/a.info 2>> report/a.error;
-cat /proc/meminfo | grep MemTotal >> report/a.info 2>> report/a.error;
-cat /proc/cpuinfo | grep MemTotal -m 1 >> report/a.info 2>> report/a.error;
+df -h | grep sda[0-9] >> ./report/a.info 2>> ./report/a.error;
+cat /proc/meminfo | grep MemTotal >> ./report/a.info 2>> ./report/a.error;
+cat /proc/cpuinfo | grep MemTotal -m 1 >> ./report/a.info 2>> ./report/a.error;
 GPU_ID= lspci | grep VGA | awk '{print $1}';
-lspci -v -s 01:00.0 >> report/a.info 2>> report/a.error;
+lspci -v -s 01:00.0 >> ./report/a.info 2>> ./report/a.error;
 
 # PART 2
-du ~ -hs >> report/b.info 2>> report/b.error;
-du ~ -h --max-depth=1 >> report/b.info 2>> report/b.error;
-quota >> report/b.info 2>> report/b.error;
-find ~ | wc -l >> report/b.info 2>> report/b.error ;
-find ~ -name *\.java | wc -l >> report/b.info 2>> report/b.error;
+du ~ -hs >> ./report/b.info 2>> ./report/b.error;
+du ~ -h --max-depth=1 >> ./report/b.info 2>> ./report/b.error;
+quota >> ./report/b.info 2>> ./report/b.error;
+find ~ | wc -l >> ./report/b.info 2>> ./report/b.error ;
+find ~ -name *\.java | wc -l >> ./report/b.info 2>> ./report/b.error;
 
 # PART 3
 
@@ -18,7 +20,7 @@ find ~ -name *\.java | wc -l >> report/b.info 2>> report/b.error;
 sleep 1664 &
 ps -aux | grep ^`whoami` | grep sleep;
 
-top -u $USER -b -n 1 -o %MEM| head -n 17 | tail -n 10 >> report/c.info 2>> report/c.error;
+top -u $USER -b -n 1 -o %MEM| head -n 17 | tail -n 10 >> ./report/c.info 2>> ./report/c.error;
 
 : '
 Exercice 2 :
