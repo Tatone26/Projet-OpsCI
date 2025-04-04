@@ -1,0 +1,42 @@
+services:
+
+  strapi-pg:
+    container_name: strapi-pg
+    restart : unless-stopped
+    image: postgres
+    environment:
+        POSTGRES_PASSWORD: password
+        POSTGRES_USER: strapi
+        POSTGRES_DB: strapi
+    ports:
+      - "5432:5432"
+    networks:
+      - notrereseau
+
+  strapi:
+    container_name: strapi
+    build: ./notre-projet
+    restart: unless-stopped
+    env_file: ./notre-projet/.env
+    environment:
+      NODE_ENV: production
+    ports:
+      - "1337:1337"
+    networks:
+      - notrereseau
+    depends_on:
+      - strapi-pg
+
+  front:
+    build: ./opsci-strapi-frontend-master
+    ports:
+      - "5173:80"
+    networks:
+      - notrereseau
+    depends_on:
+      - strapi
+
+networks:
+  notrereseau:
+    name: notrereseau
+    driver: bridge
