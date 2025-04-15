@@ -2,12 +2,12 @@ services:
 
   strapi-pg:
     container_name: strapi-pg
-    restart : unless-stopped
+    restart: unless-stopped
     image: postgres
     environment:
-        POSTGRES_PASSWORD: password
-        POSTGRES_USER: strapi
-        POSTGRES_DB: strapi
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: strapi
+      POSTGRES_DB: strapi
     ports:
       - "5432:5432"
     networks:
@@ -26,15 +26,6 @@ services:
       - notrereseau
     depends_on:
       - strapi-pg
-
-  front:
-    build: ./opsci-strapi-frontend-master
-    ports:
-      - "5173:80"
-    networks:
-      - notrereseau
-    depends_on:
-      - strapi
 
 networks:
   notrereseau:

@@ -1,0 +1,32 @@
+services:
+  product-producer:
+    image: arthurescriou/product-producer:1.0.0
+    environment:
+      BROKER_1: kafka:9092
+      BROKER_2: kafka:9092
+      BROKER_3: kafka:9092
+      TOPIC: product
+      FILE_NAME: /data/products.csv
+    networks:
+      - kafkanetwork
+    volumes:
+      - ./products.csv:/data/products.csv
+
+  product-consumer:
+    image: arthurescriou/product-consumer:1.0.3
+    environment:
+      BROKER_1: kafka:9092
+      BROKER_2: kafka:9092
+      BROKER_3: kafka:9092
+      TOPIC: product
+      STRAPI_TOKEN: xxxxx
+      STRAPI_URL: http://strapi:1337
+    networks:
+      - kafkanetwork
+      - notrereseau
+
+networks:
+  kafkanetwork:
+    external: true
+  notrereseau:
+    external: true
