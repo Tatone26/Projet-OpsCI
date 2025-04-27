@@ -1,0 +1,17 @@
+services:
+  connector:
+    image: arthurescriou/mqtt-kafka-connector:1.0.0
+    environment:
+      BROKER_1: kafka:9092
+      BROKER_2: kafka:9092
+      BROKER_2: kafka:9092
+      KAFKA_TOPIC: stock
+      MQTT_TOPIC: topic
+      MQTT_ENDPOINT: ws://mqtt-broker:1883
+    networks:
+      - kafkanetwork
+
+
+networks:
+  kafkanetwork:
+    external: true
